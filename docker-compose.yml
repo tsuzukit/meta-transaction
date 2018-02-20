@@ -1,0 +1,12 @@
+version: "2"
+
+services:
+
+  meta-transaction:
+    image: meta-transaction
+    container_name: meta-transaction
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    volumes:
+      - .:/usr/repo
