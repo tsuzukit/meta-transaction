@@ -178,4 +178,59 @@ describe('txrelay', () => {
     assert.equal(updateMessage, message);
   });
 
+  it('does not accept transaction if sender and signer is different', async () => {
+
+    // fetch nonce of sender address tracked at TxRelay
+    let clientAddressNonce = await txRelay.methods.getNonce(config.client_account.address).call();
+
+    // fetch nonce of sender address
+    let serverAddressNonce = await web3.eth.getTransactionCount(config.server_account.address);
+
+    let updateMessage = 'If this message is written to blockchain, test failed';
+    let messageBoxAbi = JSON.parse(compiledMessageBox.interface);
+    let rawTx = await MetaTransactionClient.createTx(messageBoxAbi, 'setMessage', [updateMessage], {
+      to: messageBox.options.address,
+      value: 0,
+      nonce: parseInt(clientAddressNonce), // nonce must match the one at TxRelay contract
+      gas: 2000000,
+      gasPrice: 2000000,
+      gasLimit: 2000000
+    });
+    txToServer = await MetaTransactionClient.createRawTxToRelay(
+      rawTx,
+      config.client_account.address,
+      config.client_account.privateKey,
+      txRelay.options.address
+    );
+
+    let signedTxToRelay = await MetaTransactionServer.createRawTxToRelay(
+      JSON.parse(compiledTxRelay.interface),
+      txToServer.sig,
+      txToServer.to,
+      config.server_account.address, // Since this is different from signer, this transaction should fail
+      txToServer.data,
+      {
+        "gas": 2000000,
+        "gasPrice": 2000000,
+        "gasLimit": 2000000,
+        "value": 0,
+        "to": txRelay.options.address,
+        "nonce": parseInt(serverAddressNonce), // nonce of address which signs tx ad server
+        "from": config.server_account.address
+      },
+      config.server_account.privateKey
+    );
+
+    try {
+      const result = await web3.eth.sendSignedTransaction('0x' + signedTxToRelay);
+      assert(false);
+    }
+    catch (err) {
+      assert(true);
+    }
+
+    message = await messageBox.methods.message().call();
+    assert.notEqual(updateMessage, message);
+  });
+
 });
