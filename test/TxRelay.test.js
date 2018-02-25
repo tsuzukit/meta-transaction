@@ -63,7 +63,7 @@ describe('txrelay', () => {
     });
 
     // fetch nonce of sender address tracked at TxRelay
-    let nonce = await txRelay.methods.getNonce(config.client_account.address).call();
+    let nonce = await txRelay.methods.nonce(config.client_account.address).call();
 
     let messageBoxAbi = JSON.parse(compiledMessageBox.interface);
     let rawTx = await MetaTransactionClient.createTx(messageBoxAbi, 'setMessage', [newMessage], {
@@ -126,13 +126,12 @@ describe('txrelay', () => {
 
     message = await messageBox.methods.message().call();
     assert.equal(newMessage, message);
-
   });
 
   it('increases nonce and can send transaction again', async () => {
 
     // fetch nonce of sender address tracked at TxRelay
-    let clientAddressNonce = await txRelay.methods.getNonce(config.client_account.address).call();
+    let clientAddressNonce = await txRelay.methods.nonce(config.client_account.address).call();
 
     // fetch nonce of sender address
     let serverAddressNonce = await web3.eth.getTransactionCount(config.server_account.address);
@@ -181,7 +180,7 @@ describe('txrelay', () => {
   it('does not accept transaction if sender and signer is different', async () => {
 
     // fetch nonce of sender address tracked at TxRelay
-    let clientAddressNonce = await txRelay.methods.getNonce(config.client_account.address).call();
+    let clientAddressNonce = await txRelay.methods.nonce(config.client_account.address).call();
 
     // fetch nonce of sender address
     let serverAddressNonce = await web3.eth.getTransactionCount(config.server_account.address);

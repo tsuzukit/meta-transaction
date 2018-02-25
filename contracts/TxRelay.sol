@@ -5,7 +5,7 @@ contract TxRelay {
 
     // Note: This is a local nonce.
     // Different from the nonce defined w/in protocol.
-    mapping(address => uint) nonce;
+    mapping(address => uint) public nonce;
 
     // This is for debug purpose
     event Log(address from, string message);
@@ -41,15 +41,6 @@ contract TxRelay {
 
         // invoke method on behalf of sender
         require(destination.call(data));
-    }
-
-    /*
-     * @dev Returns the local nonce of an account.
-     * @param add The address to return the nonce for.
-     * @return The specific-to-this-contract nonce of the address provided
-     */
-    function getNonce(address add) public constant returns (uint) {
-        return nonce[add];
     }
 
 }
