@@ -6,7 +6,7 @@ Meta transaction is proposed by uPort and detailed description can be found [her
 
 Below describes concept of meta transaction demonstrated in this repository.
 
-![concept](image/readme1.png "concept")
+![concept](image/readme_1.png "concept")
 
 # Prerequisite
 
