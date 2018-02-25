@@ -37,8 +37,6 @@ contract TxRelay {
         //if we are going to do tx, update nonce
         nonce[sender]++;
 
-        Log(addressFromSig, 'Sender address');
-
         // invoke method on behalf of sender
         require(destination.call(data));
     }

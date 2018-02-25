@@ -51,6 +51,9 @@ describe('txrelay', () => {
   it('deploys contracts', () => {
     assert.ok(txRelay.options.address);
     assert.ok(messageBox.options.address);
+
+    console.log("TxRelay address is " + txRelay.options.address);
+    console.log("MessageBox address is " + messageBox.options.address);
   });
 
   it('can sign tranxsaction at client', async () => {
@@ -126,6 +129,9 @@ describe('txrelay', () => {
 
     message = await messageBox.methods.message().call();
     assert.equal(newMessage, message);
+
+    sender = await messageBox.methods.sender().call();
+    assert.equal(txRelay.options.address, sender);
   });
 
   it('increases nonce and can send transaction again', async () => {
