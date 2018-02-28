@@ -28,7 +28,7 @@ contract TxRelay {
 
         // use EIP 191
         // 0x19 :: version :: relay :: sender :: nonce :: destination :: data
-        bytes32 h = keccak256(byte(0x19), byte(0), this, sender, nonce[sender], destination, data);
+        bytes32 h = sha3(byte(0x19), byte(0), this, sender, nonce[sender], destination, data);
         address addressFromSig = ecrecover(h, sigV, sigR, sigS);
 
         // address recovered from signature must match with claimed sender
