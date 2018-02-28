@@ -1,4 +1,4 @@
-pragma solidity ^0.4.16;
+pragma solidity 0.4.19;
 
 // This is test contract invoked by TxProxy
 // It can only record message and last sender

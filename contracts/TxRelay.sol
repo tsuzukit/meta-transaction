@@ -1,4 +1,4 @@
-pragma solidity ^0.4.16;
+pragma solidity 0.4.19;
 
 // This contract is heavily inspired by uPort from https://github.com/uport-project/uport-identity/blob/develop/contracts/TxRelay.sol
 contract TxRelay {
