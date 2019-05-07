@@ -24,6 +24,10 @@ Install docker for mac
 
 ```
 $ sh script/start.sh
+
+// required only for the first time
+$ sh script/enter.sh
+# npm install
 ```
 
 # Setup account
@@ -34,11 +38,11 @@ Create `config.json` at root folder
 {
   "server_account": {
     "privateKey": <PRIVATE KEY>,
-    "address": <ADDRESS>,
+    "address": <ADDRESS>
   },
   "client_account": {
     "privateKey": <PRIVATE KEY>,
-    "address": <ADDRESS>,
+    "address": <ADDRESS>
   }
 }
 ```
@@ -104,3 +108,6 @@ let signedTxToRelay = await MetaTransactionServer.createRawTxToRelay(
 // esnd tx to TxRelay contract
 const result = await web3.eth.sendSignedTransaction('0x' + signedTxToRelay);
 ```
+
+## License
+MIT
